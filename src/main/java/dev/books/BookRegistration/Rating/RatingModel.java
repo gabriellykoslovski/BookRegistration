@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 
 @Entity
 @Table(name = "tb_ratings")
@@ -18,7 +20,7 @@ public class RatingModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private UUID id;
     private int rating; // Exemplo: 1 a 5 estrelas
     @OneToOne
     @JoinColumn(name = "book_id")

@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_registration")
@@ -18,10 +20,10 @@ public class BookModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private UUID id;
     private String title;
     private String author;
-    private int realeaseYear;
+    private LocalDate realeaseYear;
     private String publisher;
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
@@ -31,5 +33,7 @@ public class BookModel {
     @OneToOne
     @JoinColumn(name = "rating_id")
     private RatingModel rating;
+    @Column(name = "book_image", nullable = true)
+    private byte[] bookImage;
 
 }
