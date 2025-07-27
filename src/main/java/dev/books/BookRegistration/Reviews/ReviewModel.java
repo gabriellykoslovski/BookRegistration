@@ -1,5 +1,6 @@
 package dev.books.BookRegistration.Reviews;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.books.BookRegistration.Books.BookModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,6 @@ public class ReviewModel {
     private String review;
     @ManyToOne()
     @JoinColumn(name = "book_id") // Foreing key
+    @JsonIgnore
     private BookModel book;
 }

@@ -27,6 +27,7 @@ public class BookModel {
     private String publisher;
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+    @Column(length = 1000)
     private String description;
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<ReviewModel> reviews;

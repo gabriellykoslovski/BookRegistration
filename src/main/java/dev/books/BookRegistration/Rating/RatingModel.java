@@ -1,5 +1,6 @@
 package dev.books.BookRegistration.Rating;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.books.BookRegistration.Books.BookModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class RatingModel {
     private int rating; // Exemplo: 1 a 5 estrelas
     @OneToOne
     @JoinColumn(name = "book_id")
+    @JsonIgnore
     private BookModel book;
 
 }
