@@ -5,42 +5,48 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
 
     private BookRepository bookRepository;
+    private BookMapper bookMapper;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
+        this.bookMapper = bookMapper;
     }
 
-    // Listar todos os meus livros
-    public List<BookModel> showAllBooks(){
-        return bookRepository.findAll();
+    public List<BookDTO> showAllBooks(){
+        List<BookModel> books = bookRepository.findAll();
+        return books.stream()
+                .map(bookMapper::map)
+                .collect(Collectors.toList());
     }
 
-    // Listar o livro por ID
-    public BookModel showBookById(UUID id){
+    public BookDTO showBookById(UUID id){
         Optional<BookModel> bookById = bookRepository.findById(id);
-        return bookById.orElse(null);
+        return bookById.map(bookMapper::map).orElse(null);
     }
 
-    // Cadastrar um novo livro
-    public BookModel createBook(BookModel book){
-        return bookRepository.save(book);
+    public BookDTO createBook(BookDTO bookDTO){
+        BookModel book = bookMapper.map(bookDTO);
+        book = bookRepository.save(book);
+        return bookMapper.map(book);
     }
 
-    // Deletar um livro - Tem que ser um metodo VOID
     public void deleteBook(UUID id){
        bookRepository.deleteById(id);
     }
 
-    // Atualizar os dados do livro
-    public BookModel updateBook(UUID id, BookModel book){
-        if(bookRepository.existsById(id)){
+    public BookDTO updateBook(UUID id, BookDTO bookDTO){
+        Optional<BookModel> bookSelected = bookRepository.findById(id);
+        if (bookSelected.isPresent()){
+            BookModel book = bookMapper.map(bookDTO);
             book.setId(id);
-            return bookRepository.save(book);
+            BookModel bookToSave = bookRepository.save(book);
+            return bookMapper.map((bookToSave));
         }
         return null;
     }

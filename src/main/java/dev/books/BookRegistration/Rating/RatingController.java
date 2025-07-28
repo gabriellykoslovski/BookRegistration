@@ -16,22 +16,22 @@ public class RatingController {
     }
 
     @PostMapping("/create")
-    public RatingModel createRating(@RequestBody RatingModel rating) {
+    public RatingDTO createRating(@RequestBody RatingDTO rating) {
         return ratingService.createRating(rating);
     }
 
     @GetMapping("/list/{id}")
-    public RatingModel showRatingById(@PathVariable UUID id) {
+    public RatingDTO showRatingById(@PathVariable UUID id) {
         return ratingService.showRatingById(id);
     }
 
     @GetMapping("/list")
-    public List<RatingModel> showAllRatings() {
+    public List<RatingDTO> showAllRatings() {
         return ratingService.showAllRatings();
     }
 
     @PutMapping("/update/{id}")
-    public RatingModel updateRating(@PathVariable UUID id, RatingModel rating) {
+    public RatingDTO updateRating(@PathVariable UUID id, RatingDTO rating) {
         return ratingService.updateRating(id, rating);
     }
 

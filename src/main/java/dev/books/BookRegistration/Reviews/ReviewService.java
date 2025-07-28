@@ -6,38 +6,51 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
 
     private ReviewRepository reviewRepository;
+    private ReviewMapper reviewMapper;
 
-    public ReviewService(ReviewRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
         this.reviewRepository = reviewRepository;
+        this.reviewMapper = reviewMapper;
     }
 
-    public List<ReviewModel> showAllReviews() {
-        return reviewRepository.findAll();
+    public List<ReviewDTO> showAllReviews() {
+        List<ReviewModel> reviews = reviewRepository.findAll();
+        return reviews.stream()
+                .map(reviewMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public ReviewModel showReviewById(UUID id){
+    public ReviewDTO showReviewById(UUID id){
         Optional<ReviewModel> reviewById = reviewRepository.findById(id);
-        return reviewById.orElse(null);
+        return reviewById.map(reviewMapper::map).orElse(null);
     }
 
-    public ReviewModel createReview(ReviewModel review){
-        return reviewRepository.save(review);
+    public ReviewDTO createReview(ReviewDTO reviewDTO){
+        ReviewModel review = reviewMapper.map(reviewDTO);
+        review = reviewRepository.save(review);
+        return reviewMapper.map(review);
     }
 
     public void deleteReview(UUID id){
         reviewRepository.deleteById(id);
     }
 
-    public ReviewModel updateReview(UUID id, ReviewModel review){
-        if(reviewRepository.existsById(id)){
+    public ReviewDTO updateReview(UUID id, ReviewDTO reviewDTO){
+        Optional<ReviewModel> reviewSelected = reviewRepository.findById(id);
+        if (reviewSelected.isPresent()){
+            ReviewModel review = reviewMapper.map(reviewDTO);
             review.setId(id);
-            return reviewRepository.save(review);
+            ReviewModel reviewToSave = reviewRepository.save(review);
+
+            return reviewMapper.map(reviewToSave);
         }
+
         return null;
     }
 

@@ -17,22 +17,22 @@ public class ReviewController {
     }
 
     @PostMapping("/create")
-    public ReviewModel createReview(@RequestBody ReviewModel review){
+    public ReviewDTO createReview(@RequestBody ReviewDTO review){
         return reviewService.createReview(review);
     }
 
     @GetMapping("/list/{id}")
-    public ReviewModel showReviewById(@PathVariable UUID id){
+    public ReviewDTO showReviewById(@PathVariable UUID id){
         return reviewService.showReviewById(id);
     }
 
     @GetMapping("/list")
-    public List<ReviewModel> showAllReviews(){
+    public List<ReviewDTO> showAllReviews(){
         return reviewService.showAllReviews();
     }
 
     @PutMapping("/update/{id}")
-    public ReviewModel updateReview(@PathVariable UUID id, @RequestBody ReviewModel review){
+    public ReviewDTO updateReview(@PathVariable UUID id, @RequestBody ReviewDTO review){
         return reviewService.updateReview(id, review);
     }
 
