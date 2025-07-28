@@ -21,7 +21,7 @@ public class ReviewModel {
     private UUID id;
     private String review;
     @ManyToOne()
-    @JoinColumn(name = "book_id") // Foreing key
+    @JoinColumn(name = "book_id")
     @JsonIgnore
     private BookModel book;
 }
