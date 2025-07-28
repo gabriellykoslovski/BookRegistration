@@ -1,6 +1,5 @@
 package dev.books.BookRegistration.Reviews;
 
-import dev.books.BookRegistration.Books.BookDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
