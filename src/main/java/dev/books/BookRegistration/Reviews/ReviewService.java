@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewService {
 
-    private ReviewRepository reviewRepository;
-    private ReviewMapper reviewMapper;
+    private final ReviewRepository reviewRepository;
+    private final ReviewMapper reviewMapper;
 
     public ReviewService(ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
         this.reviewRepository = reviewRepository;
